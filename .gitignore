@@ -1,0 +1,23 @@
+
+# Dependencies
+node_modules/
+
+# Secrets & credentials
+.env
+.env.*
+*.xlsx
+*.xls
+uploads/
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
+
+# Runtime / local artifacts
+screenshots/
+*.log
+.DS_Store
+Thumbs.db

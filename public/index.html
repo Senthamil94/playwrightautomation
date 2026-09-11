@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Popup Deploy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Sans+3:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="bg-grid" aria-hidden="true"></div>
+    <main class="shell">
+      <header class="hero">
+        <p class="eyebrow">WordPress Popup Builder</p>
+        <h1>Popup Deploy</h1>
+        <p class="lede" id="ledeText">
+          Upload a flyer and credentials sheet, then push the image popup to every site in one pass.
+        </p>
+      </header>
+
+      <section class="mode-panel" aria-label="Action mode">
+        <p class="mode-label">Choose action</p>
+        <div class="mode-switch" role="tablist">
+          <button type="button" class="mode-btn active" data-mode="upload" id="modeUpload">
+            Upload flyer
+          </button>
+          <button type="button" class="mode-btn" data-mode="disable" id="modeDisable">
+            Delete flyer
+          </button>
+          <button type="button" class="mode-btn" data-mode="test" id="modeTest">
+            Test flyer
+          </button>
+        </div>
+        <p class="mode-hint" id="modeHint">
+          Creates a new image popup on each site from the credentials sheet.
+        </p>
+      </section>
+
+      <section class="setup" aria-label="Uploads">
+        <label class="drop" id="flyerDrop">
+          <input type="file" id="flyerInput" accept="image/png,image/jpeg,image/gif,image/webp" hidden />
+          <span class="drop-kicker">Flyer image</span>
+          <span class="drop-title" id="flyerLabel">Drop flyer or browse</span>
+          <span class="drop-hint">PNG, JPG, GIF, WEBP</span>
+        </label>
+
+        <label class="drop" id="excelDrop">
+          <input type="file" id="excelInput" accept=".xlsx,.xls,.csv" hidden />
+          <span class="drop-kicker">Credentials sheet</span>
+          <span class="drop-title" id="excelLabel">Drop Excel or browse</span>
+          <span class="drop-hint">Admin URL · User Name · Password</span>
+        </label>
+      </section>
+
+      <section class="controls">
+        <div class="field-row">
+          <label class="title-field" id="titleField">
+            <span>Popup title</span>
+            <input type="text" id="popupTitle" value="Weekend Special" maxlength="120" />
+          </label>
+          <label class="title-field" id="rowField">
+            <span>Start from row (optional)</span>
+            <input type="number" id="startRow" min="1" step="1" placeholder="1 = first row" />
+          </label>
+          <label class="title-field" id="concurrencyField">
+            <span>Sites at once</span>
+            <input type="number" id="concurrency" min="1" max="12" step="1" value="8" />
+          </label>
+        </div>
+        <label class="check-field">
+          <input type="checkbox" id="showBrowsers" />
+          <span>Show browser windows (slower)</span>
+        </label>
+        <div class="actions">
+          <button type="button" id="startBtn" class="btn primary" disabled>Start upload</button>
+          <button type="button" id="stopBtn" class="btn ghost" disabled>Stop</button>
+        </div>
+        <p class="ready-line" id="readyLine">Upload both files to unlock Start.</p>
+      </section>
+
+      <section class="progress-panel" aria-live="polite">
+        <div class="progress-head">
+          <h2>Progress</h2>
+          <span class="status-pill" id="statusPill">Idle</span>
+        </div>
+
+        <div class="meter" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="meter">
+          <div class="meter-fill" id="meterFill"></div>
+        </div>
+
+        <div class="stats">
+          <div class="stat">
+            <span class="stat-label">Total websites</span>
+            <strong id="statTotal">0</strong>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Done</span>
+            <strong id="statDone">0</strong>
+          </div>
+          <div class="stat ok">
+            <span class="stat-label" id="statSuccessLabel">Uploaded</span>
+            <strong id="statSuccess">0</strong>
+          </div>
+          <div class="stat bad">
+            <span class="stat-label" id="statFailedLabel">Not uploaded</span>
+            <strong id="statFailed">0</strong>
+          </div>
+        </div>
+
+        <p class="current" id="currentLine">Waiting to start…</p>
+      </section>
+
+      <section class="ok-panel">
+        <div class="ok-head">
+          <h2 id="okHeading">Uploaded websites</h2>
+          <span id="okCount">0</span>
+        </div>
+        <div class="ok-list" id="okList">
+          <p class="empty">Successful sites will appear here.</p>
+        </div>
+      </section>
+
+      <section class="fail-panel">
+        <div class="fail-head">
+          <h2 id="failHeading">Not uploaded websites</h2>
+          <span id="failCount">0</span>
+        </div>
+        <div class="fail-list" id="failList">
+          <p class="empty">Failed sites will appear here.</p>
+        </div>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" hidden></div>
+    <script src="/app.js"></script>
+  </body>
+</html>
